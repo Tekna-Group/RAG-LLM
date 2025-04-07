@@ -56,6 +56,12 @@ class DocumentController extends Controller
             'query' => 'required|string',
             'group' => 'group|string',
         ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+            ], 422); // 422 = Unprocessable Entity
+        }
     
         return Document::where('group',$request->group)->whereRaw("MATCH(content) AGAINST(? IN NATURAL LANGUAGE MODE)", [$query])->get();
     }
