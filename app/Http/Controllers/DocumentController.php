@@ -52,8 +52,12 @@ class DocumentController extends Controller
     public function retrieve(Request $request)
     {
         $query = $request->input('query');
+        $validator = Validator::make($request->all(), [
+            'query' => 'required|string',
+            'group' => 'group|string',
+        ]);
     
-        return Document::whereRaw("MATCH(content) AGAINST(? IN NATURAL LANGUAGE MODE)", [$query])->get();
+        return Document::where('group',$request->group)->whereRaw("MATCH(content) AGAINST(? IN NATURAL LANGUAGE MODE)", [$query])->get();
     }
     public function generateResponse(Request $request)
     {
