@@ -20,4 +20,4 @@ use Illuminate\Http\Request;
 
 Route::post('/documents', 'DocumentController@store');   // Handle the form submission
 Route::get('/search', [DocumentController::class, 'retrieve']);
-Route::post('/generate', [DocumentController::class, 'generateResponse']);
+Route::post('/generate', 'DocumentController@generateResponse');
