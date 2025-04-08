@@ -54,7 +54,7 @@ class DocumentController extends Controller
         $query = $request->input('query');
       
     
-        return Document::whereRaw("MATCH(content) AGAINST(? IN NATURAL LANGUAGE MODE)", [$query])->get();
+        return Document::where('group',$request->group)->whereRaw("MATCH(content) AGAINST(? IN NATURAL LANGUAGE MODE)", [$query])->get();
     }
     public function generateResponse(Request $request)
     {
